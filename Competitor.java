@@ -40,6 +40,20 @@ public class Competitor extends Person {
         return avgScore;
     }
 
+    public int getTotal() {
+        return scores[0] + scores[1] + scores[2] + scores[3];
+    }
+
+    public int getMinimum() {
+        int minimum = scores[0];
+        for(int i=0; i<scores.length; i++) {
+            if(scores[i] < minimum) {
+                minimum = scores[i];
+            }
+        }
+        return minimum;
+    }
+
     public String getAllDetails() {
         return "Competitor Number:" + compNumber + " Competitor Name:" + getName().getFullName() + " Country:" + getCountry() +
                 " Age:" + getAge() + " Email:" + getEmail() + " Level:" + getCompetitorLevel() + " Category :" + getCategory() +
@@ -66,7 +80,7 @@ public class Competitor extends Person {
     }
 
     /**
-     *Totals the Scores array and divides by the number of scores which is Array Length.
+     * Totals the Scores array and divides by the number of scores which is Array Length.
      */
     public void setAverage() {
         double sum =0;
@@ -77,7 +91,7 @@ public class Competitor extends Person {
     }
 
     /**
-     *
+     * Inputs the Competitors Score into the Score Array.
      * @param score = Score Value to insert into array
      * @param index = The location of the array we insert the Score in
      */

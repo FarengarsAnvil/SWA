@@ -53,8 +53,9 @@ public class CompetitorList {
             }
         }
 
-
-
+    /**
+     *Returns the details of the Highest Scoring Competitor as a String
+     */
     public String getHighestCompetitorAsString() {
         double highest = 0;
         Competitor temp = null;
@@ -67,6 +68,60 @@ public class CompetitorList {
         return temp.getAllDetails();
     }
 
+    /**
+     *Returns the details of the Lowest Competitor as a String
+     */
+    public String getLowestCompetitorAsString() {
+        double lowest = 0;
+        Competitor temp = null;
+        for(int i=0; i<competitorList.size(); i++) {
+            if(competitorList.get(i).getOverallScore() < lowest) {
+                lowest = competitorList.get(i).getOverallScore();
+                temp = competitorList.get(i);
+            }
+        }
+        return temp.getAllDetails();
+    }
+
+    /**
+     * @return = String of all the Totals listed seperately for each competitor
+     */
+    public String getTotalsAsString() {
+        String ret = "";
+        for(int i=0; i<competitorList.size(); i++) {
+            ret += competitorList.get(i).getTotal() + " ";
+        }
+        return ret;
+    }
+
+    /**
+     * @return = Statistic displaying the Maximum cumulative score.
+     */
+    public String getMaximum() {
+        int highest = 0;
+        for(int i=0; i<competitorList.size(); i++) {
+            if(competitorList.get(i).getTotal() > highest) {
+                highest = competitorList.get(i).getTotal();
+            }
+        }
+        return "The maximum overall score was: " + highest;
+    }
+
+    /**
+     * @return = Lowest scored result out of all Competitors
+     */
+    public String getMinimum() {
+        int lowest = 5;
+        for(int i=0; i<competitorList.size(); i++) {
+            if(competitorList.get(i).getMinimum() < lowest) {
+                lowest = competitorList.get(i).getMinimum();
+            }
+        }
+        return "The Lowest score was: " + lowest;
+    }
+    /**
+     * @return = String of all the Short details for every Competitor.
+     */
     public String getAllCompetitors() {
         String ret = "";
         for(int i=0; i<competitorList.size(); i++){
@@ -78,7 +133,7 @@ public class CompetitorList {
     public static void main(String[] args) {
 
         CompetitorList l1 = new CompetitorList("Data.csv");
-        System.out.println(l1.getHighestCompetitorAsString());
+        System.out.println(l1.getTotalsAsString());
 
 
     }
