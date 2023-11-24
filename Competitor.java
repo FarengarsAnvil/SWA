@@ -1,0 +1,97 @@
+import java.sql.Array;
+
+public class Competitor extends Person {
+
+    private int compNumber;
+    private final String competitorLevel;
+    private String email;
+    private String category;
+    private boolean isWinner = false;
+
+    private int scores[] = new int[5];
+
+    private double avgScore;
+
+    public Competitor(String fName, String mName, String lName, String countryName, int personAge, String phNumber, int cNumber, String compLevel, String email, String cat ) {
+        super(fName, mName, lName, countryName, personAge, phNumber);
+        compNumber = cNumber;
+        competitorLevel = compLevel;
+        this.email = email;
+        category = cat;
+    }
+
+    public int getCompNumber() {
+        return compNumber;
+    }
+
+    public String getCompetitorLevel() {
+        return competitorLevel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public double getOverallScore() {
+        return avgScore;
+    }
+
+    public String getAllDetails() {
+        return "Competitor Number:" + compNumber + " Competitor Name:" + getName().getFullName() + " Country:" + getCountry() +
+                " Age:" + getAge() + " Email:" + getEmail() + " Level:" + getCompetitorLevel() + " Category :" + getCategory() +
+                " Phone Number:" + getPhoneNumber() + " Overall Score:" + getOverallScore();
+    }
+
+    public String getShortDetails() {
+        return compNumber + " " + getName().getInitials() + " " + getOverallScore() + " ";
+    }
+
+    private int[] getScoreArray() {
+        return scores;
+    }
+    public void setCompNumber(int compNumber) {
+        this.compNumber = compNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    /**
+     *Totals the Scores array and divides by the number of scores which is Array Length.
+     */
+    public void setAverage() {
+        double sum =0;
+        for(int i=0; i<scores.length; i++) {
+            sum+= scores[i];
+        }
+        avgScore = sum/scores.length;
+    }
+
+    /**
+     *
+     * @param score = Score Value to insert into array
+     * @param index = The location of the array we insert the Score in
+     */
+    public void setScore(int score, int index) {
+        try {
+            scores[index] = score;
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+             System.out.println("Invalid Score entry");
+        }
+    }
+
+    public static void main(String[] args) {
+
+
+    }
+}
