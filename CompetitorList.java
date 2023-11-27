@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,6 +11,7 @@ public class CompetitorList {
 
     /**
      * @param filename = String representing a file to which data is read from for the Constructor.
+     *A filename/path is passed to the Constructor to which a file is read to form the basis of the Class.
      */
     public CompetitorList(String filename) {
         try {
@@ -39,19 +37,32 @@ public class CompetitorList {
 
     /**
      * @param filename = String representing name of file to which report is written to.
+     * Function creates a File with filename param which is a report of the entire competition with Statistics.
      */
     public void writeReport(String filename) {
             try {
-                FileOutputStream fileOut = new FileOutputStream(filename);
-                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-                //this keyword pertains to the current Object, so we're saving the current object to a file.
-                objectOut.writeObject(this);
-                objectOut.close();
-
+                FileWriter file = new FileWriter(filename);
+                BufferedWriter bw = new BufferedWriter(file);
+                bw.write(getAllCompetitors());
+                bw.write("\n");
+                bw.write(getHighestCompetitorAsString());
+                bw.write("\n");
+                bw.write("\n");
+                bw.write(getTotalsAsString());
+                bw.write("\n");
+                bw.write(getLowestCompetitorAsString());
+                bw.write("\n");
+                bw.write(getMaximum());
+                bw.write("\n");
+                bw.write(getMinimum());
+                bw.write("\n");
+                bw.write("\n");
+                bw.write(getFrequencyReport());
+                bw.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Error whilst writing");
             }
-        }
+    }
 
     /**
      *Returns the details of the Highest Scoring Competitor as a String
@@ -65,14 +76,19 @@ public class CompetitorList {
             temp = competitorList.get(i);
         }
         }
-        return temp.getAllDetails();
+        if(temp != null) {
+            return "The Highest Scoring Competitor is:\n" + temp.getAllDetails();
+        }
+        else {
+            return "Error";
+        }
     }
 
     /**
      *Returns the details of the Lowest Competitor as a String
      */
     public String getLowestCompetitorAsString() {
-        double lowest = 0;
+        double lowest = 5;
         Competitor temp = null;
         for(int i=0; i<competitorList.size(); i++) {
             if(competitorList.get(i).getOverallScore() < lowest) {
@@ -80,16 +96,21 @@ public class CompetitorList {
                 temp = competitorList.get(i);
             }
         }
-        return temp.getAllDetails();
+        if(temp != null) {
+            return "The Lowest scoring competitor is:\n" + temp.getAllDetails();
+        }
+        else {
+            return "Error";
+        }
     }
 
     /**
-     * @return = String of all the Totals listed seperately for each competitor
+     * @return = String of all the Totals listed for each competitor
      */
     public String getTotalsAsString() {
-        String ret = "";
+        String ret = "Totals:\n";
         for(int i=0; i<competitorList.size(); i++) {
-            ret += competitorList.get(i).getTotal() + " ";
+            ret += "Competitor:" + competitorList.get(i).getCompNumber() + " " + competitorList.get(i).getTotal() + " \n";
         }
         return ret;
     }
@@ -117,7 +138,7 @@ public class CompetitorList {
                 lowest = competitorList.get(i).getMinimum();
             }
         }
-        return "The Lowest score was: " + lowest;
+        return "The minimum competition score was: " + lowest;
     }
     /**
      * @return = String of all the Short details for every Competitor.
@@ -125,17 +146,63 @@ public class CompetitorList {
     public String getAllCompetitors() {
         String ret = "";
         for(int i=0; i<competitorList.size(); i++){
-            ret += competitorList.get(i).getShortDetails() + ",";
+            ret += competitorList.get(i).getAllDetails() + "\n";
         }
         return ret;
     }
 
+
+    public String getFrequencyReport() {
+        int fiveTally = 0;
+        int fourTally = 0;
+        int threeTally = 0;
+        int twoTally =0;
+        int oneTally = 0;
+        int zeroTally = 0;
+        for(int i=0; i< competitorList.size(); i++) {
+            for(int j=0; j<competitorList.get(i).getScoreArray().length; j++) {
+                if(competitorList.get(i).getScoreArray()[j] == 5) {
+                    fiveTally++;
+                }
+                else if(competitorList.get(i).getScoreArray()[j] == 4) {
+                    fourTally++;
+                }
+                else if(competitorList.get(i).getScoreArray()[j] == 3) {
+                    threeTally++;
+                }
+                else if(competitorList.get(i).getScoreArray()[j] == 2) {
+                    twoTally++;
+                }
+                else if(competitorList.get(i).getScoreArray()[j] == 1){
+                    oneTally++;
+
+                }
+                else {
+                    zeroTally++;
+                }
+            }
+        }
+        return "Frequency report\n" + "Number of 5's scored:" + fiveTally + "\nNumber of 4's scored:" + fourTally +
+        "\nNumber of 3's scored:" + threeTally + "\nNumber of 2's scored:" + twoTally + "\nNumber of 1's scored:" + oneTally +
+                "\nNumber of 0's scored:" + zeroTally;
+    }
+
+    /**
+     * @param num = Represents the Competitor Number of a Competitor
+     * @return = If num is a valid Compeitor number, then the shortDetails of the competitor is returned, else an error message
+     */
+    public String checkCompetitorExists(int num) {
+        for(int i=0; i<competitorList.size(); i++) {
+            if(num == competitorList.get(i).getCompNumber()) {
+                return competitorList.get(i).getShortDetails();
+            }
+            }
+        return "Invalid Competitor Number";
+    }
+
     public static void main(String[] args) {
-
         CompetitorList l1 = new CompetitorList("Data.csv");
-        System.out.println(l1.getTotalsAsString());
-
-
+        l1.writeReport("Report");
     }
 
 

@@ -55,16 +55,16 @@ public class Competitor extends Person {
     }
 
     public String getAllDetails() {
-        return "Competitor Number:" + compNumber + " Competitor Name:" + getName().getFullName() + " Country:" + getCountry() +
-                " Age:" + getAge() + " Email:" + getEmail() + " Level:" + getCompetitorLevel() + " Category :" + getCategory() +
-                " Phone Number:" + getPhoneNumber() + " Overall Score:" + getOverallScore();
+        return "Competitor Number:" + compNumber + ",Competitor Name:" + getName().getFullName() + ",Country:" + getCountry() +
+                ",Age:" + getAge() + ",Email:" + getEmail() + ",Level:" + getCompetitorLevel() + ",Category :" + getCategory() +
+                ",Phone Number:" + getPhoneNumber() + ",Overall Score:" + getOverallScore();
     }
 
     public String getShortDetails() {
         return compNumber + " " + getName().getInitials() + " " + getOverallScore() + " ";
     }
 
-    private int[] getScoreArray() {
+    public int[] getScoreArray() {
         return scores;
     }
     public void setCompNumber(int compNumber) {
@@ -105,6 +105,8 @@ public class Competitor extends Person {
     }
 
     public static void main(String[] args) {
+
+
 
 
     }
