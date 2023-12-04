@@ -1,4 +1,5 @@
 import java.sql.Array;
+import java.util.Arrays;
 
 public class Competitor extends Person {
 
@@ -55,7 +56,7 @@ public class Competitor extends Person {
     }
 
     public String getAllDetails() {
-        return "Competitor Number:" + compNumber + ",Competitor Name:" + getName().getFullName() + ",Country:" + getCountry() +
+        return "Competitor Number:" + getCompNumber() + ",Competitor Name:" + getName().getFullName() + ",Country:" + getCountry() +
                 ",Age:" + getAge() + ",Email:" + getEmail() + ",Level:" + getCompetitorLevel() + ",Category :" + getCategory() +
                 ",Phone Number:" + getPhoneNumber() + ",Overall Score:" + getOverallScore();
     }
@@ -105,9 +106,17 @@ public class Competitor extends Person {
     }
 
     public static void main(String[] args) {
-
-
-
+        Competitor c1 = new Competitor("Chuck", "A", "Ward", "Jamaica",
+                23, "078214567", 123, "Advanced", "unk@gmail.com", "Weightlifting");
+//        System.out.println(c1.getAllDetails() + "\n");
+//        System.out.println(c1.getShortDetails() + "\n");
+//        System.out.println(c1.getCompNumber() + "\n");
+//        System.out.println(c1.getAge() + "\n");
+//        c1.setScore(4, 0);
+//        c1.setScore(5,1);
+//        c1.setScore(3,2);
+//        System.out.println(Arrays.toString(c1.getScoreArray()) + "\n");
+//        System.out.println(c1.getAge() + "\n");
 
     }
 }
